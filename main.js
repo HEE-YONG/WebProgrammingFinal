@@ -251,9 +251,10 @@ function doEveryFrame() {
     if (timer % 1500 == 0) {
       currentTimer = timer;
       tapTimer = timer;
-      dino.x = 20;
-      dino.y = 295;
+      //dino.x = 20;
       moveOk = false;
+      changeBodyBackgroundColorToGray();
+      moveToStart();
       bgm_normal.play();
       bgm_hard.pause();
       sooStart();
@@ -279,6 +280,7 @@ function doEveryFrame() {
     //1500~2999 4500~5999
     if (timer % 1500 == 0) {
       moveOk = true;
+      changeBodyBackgroundColorToRed();
       bgm_normal.pause();
       bgm_hard.play();
     }
@@ -295,9 +297,9 @@ function doEveryFrame() {
   });
 
   // 좌우 키 입력에 따른 dino.x 위치 업데이트
-  if (leftKeyPressed && dino.x > 10) {
+  if (leftKeyPressed && dino.x > 20) {
     dino.x -= moveSpeed;
-  } else if (rightKeyPressed && dino.x < canvas.width - dino.width - 10) {
+  } else if (rightKeyPressed && dino.x < canvas.width - dino.width - 20) {
     dino.x += moveSpeed;
   }
 
@@ -322,19 +324,27 @@ function doEveryFrame() {
     soo.x -= 2.5;
     sooTimer++;
   }
-
+  // 명수 나오기
   if (doSoo && sooTimer > 100) {
     doSoo = false;
     sooTimer = 0;
   }
+  // 명수 들어가기
   if (endSoo) {
     soo.x += 2.5;
     sooTimer++;
   }
-
   if (endSoo && sooTimer > 100) {
     endSoo = false;
     sooTimer = 0;
+  }
+
+  //move to start
+  if (movingToStart == true) {
+    dino.x -= 8;
+    if (dino.x < 19) {
+      movingToStart = false;
+    }
   }
 
   // 화면 업데이트
@@ -438,4 +448,28 @@ bgm_hard.addEventListener("ended", function () {
 
 /**************************************   CONTROLS   ********************************************/
 
-//function ()
+//배경색 바뀌기
+function changeBodyBackgroundColorToRed() {
+  var bodyElement = document.querySelector("body");
+  bodyElement.style.backgroundColor = "rgb(250, 88, 88)";
+}
+function changeBodyBackgroundColorToGray() {
+  var bodyElement = document.querySelector("body");
+  bodyElement.style.backgroundColor = "rgb(71, 71, 71)";
+}
+
+//normal mode로 바뀔때 위치 이동
+var movingToStart = false;
+function moveToStart() {
+  movingToStart = true;
+}
+
+// 게임을 중지하는 함수
+function stopGame() {
+  location.reload();
+}
+document.addEventListener("keydown", function (event) {
+  if (event.key === "s") {
+    stopGame();
+  }
+});

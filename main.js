@@ -17,6 +17,7 @@ class Score {
     ctx.fillStyle = "red";
     ctx.font = "20px 'DotGothic16', sans-serif";
     const score = Math.floor(timer / 30);
+
     ctx.fillText(`score: ${score}`, this.x, this.y);
   }
 }
@@ -307,7 +308,7 @@ class Kuten {
   }
 }
 /**************************************   Game   ********************************************/
-var score = 0;
+var myScore = document.querySelector(".myScore");
 var timer = 0;
 var obstacleArray = [];
 var jumpTimer = 0;
@@ -330,7 +331,7 @@ var x_value = [0, 0, 180, 360, 540, 720, 720];
 var randomIndex2;
 var x_point = 450;
 var obstacleArray2 = [];
-var obstacleSpeed2 = 10;
+var obstacleSpeed2 = 8;
 var obstacleArray3 = [];
 
 //매 프레임마다 함수 실행시킴(모니터 fps에 따라 다름)
@@ -531,6 +532,8 @@ function colDetection(dino, obstacle) {
       bgm_normal.pause(); // 재생 중인 경우 멈춤
     }
     gameover.play();
+    myScore.innerText = "내 점수 : " + Math.floor(timer / 30);
+    openmodal();
   }
 }
 //명수 시작
@@ -620,20 +623,38 @@ function moveToStart() {
   movingToStart = true;
 }
 
-// 게임을 중지하는 함수
+// 게임을 재시작하는 함수
 function stopGame() {
   location.reload();
 }
-document.addEventListener("keydown", function (event) {
-  if (event.key === "s") {
-    stopGame();
-  }
-});
 
 //난이도 증가
 function upgradeDifficulty() {
   interval.push(30);
   interval.push(30);
   obstacleSpeed++;
-  obstacleSpeed2++;
+  obstacleSpeed2 += 2;
 }
+/**************************************   MODAL   ********************************************/
+document.addEventListener("DOMContentLoaded", function () {
+  var main = document.querySelector(".main");
+  var modalWrapper = document.querySelector(".modal-wrapper");
+
+  var closeButton = document.querySelector(".btn-close");
+  closeButton.addEventListener("click", function () {
+    modalWrapper.classList.remove("open");
+
+    main.classList.remove("blur-it");
+  });
+});
+function openmodal(e) {
+  var modalWrapper = document.querySelector(".modal-wrapper");
+  var main = document.querySelector(".main");
+
+  modalWrapper.classList.toggle("open");
+  main.classList.toggle("blur-it");
+
+  return false;
+}
+var replayButton = document.querySelector(".replayButton");
+replayButton.addEventListener("click", stopGame);

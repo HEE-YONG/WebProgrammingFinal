@@ -18,23 +18,53 @@
     </style>
   </head>
   <body>
-    <audio
-      class="bgm"
-      id="bgm_normal"
-      src="./bgm/bgm_normal.mp3"
-      controls
-      autoplay
-    ></audio>
-    <audio
-      class="bgm"
-      id="bgm_hard"
-      src="./bgm/bgm_hard-10.mp3"
-      controls
-    ></audio>
-    <audio class="bgm" id="gameover" src="./bgm/gameover.mp3" controls></audio>
+    <div class="main">
+      <audio
+        class="bgm"
+        id="bgm_normal"
+        src="./bgm/bgm_normal.mp3"
+        controls
+        autoplay
+      ></audio>
+      <audio
+        class="bgm"
+        id="bgm_hard"
+        src="./bgm/bgm_hard-10.mp3"
+        controls
+      ></audio>
+      <audio
+        class="bgm"
+        id="gameover"
+        src="./bgm/gameover.mp3"
+        controls
+      ></audio>
 
-    <div>
-      <canvas id="canvas"></canvas>
+      <div>
+        <canvas id="canvas"></canvas>
+      </div>
+    </div>
+    <!-- 게임 오버 모달 -->
+    <div class="modal-wrapper">
+      <div class="modal">
+        <div class="head">
+          <button class="btn-close">X</button>
+        </div>
+        <div class="content">
+          <p class="myScore">내 점수 :</p>
+          <a class="replayButton" href="#">
+            <div class="buttonContainer">
+              <img class="buttonImg" src="/images/button2.png" />
+              <div class="buttonText">다시 하기</div>
+            </div>
+          </a>
+          <a href="index.html">
+            <div class="buttonContainer">
+              <img class="buttonImg" src="/images/button1.png" />
+              <div class="buttonText">처음으로</div>
+            </div>
+          </a>
+        </div>
+      </div>
     </div>
     <script src="main.js"></script>
   </body>

@@ -3,13 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>MS피하기</title>
+    <link
+      rel="shortcut icon"
+      href="/images/ipziopp_dot.ico"
+      type="image/x-icon"
+    />
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <a href="main.html">시작하기</a>
-    <a href="#">게임방법</a>
-    <a href="#">설정</a>
+    <div class="main">
+      <div class="title">명수 피하기</div>
+      <div class="buttons">
+        <a class="button" href="main.html">
+          <div class="buttonContainer">
+            <img class="buttonImg" src="/images/button1.png" />
+            <div class="buttonText">게임 시작</div>
+          </div>
+        </a>
+        <br />
+        <a class="button" href="#">
+          <div class="buttonContainer">
+            <img class="buttonImg" src="/images/button2.png" />
+            <div class="buttonText">게임 방법</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
     <audio class="bgm" id="bgm" src="./bgm/bgm.mp3" controls autoplay></audio>
     <script src="index.js"></script>
   </body>

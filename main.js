@@ -31,7 +31,7 @@ var dino = {
   height: 55,
   draw() {
     ctx.fillStyle = "green";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    //ctx.fillRect(this.x, this.y, this.width, this.height);
 
     // 이미지 크기를 사각형의 크기에 맞게 조정
     var imageWidth = this.width + 4;
@@ -144,7 +144,7 @@ class keyGuide {
 
   draw() {
     ctx.fillStyle = "red";
-    ctx.font = "35px 'DotGothic16', sans-serif";
+    ctx.font = "35px 'CustomFont', sans-serif";
     ctx.fillText("<- -> 키를 사용해서 피하세요", this.x, this.y);
   }
 }
@@ -162,7 +162,7 @@ class Cactus {
   }
   draw() {
     ctx.fillStyle = "red";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    //ctx.fillRect(this.x, this.y, this.width, this.height);
 
     // 이미지 크기를 사각형의 크기에 맞게 조정
     var imageWidth = this.width + 4;
@@ -201,7 +201,7 @@ class Cat {
   }
   draw() {
     ctx.fillStyle = "red";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    //ctx.fillRect(this.x, this.y, this.width, this.height);
 
     // 이미지 크기를 사각형의 크기에 맞게 조정
     var imageWidth = this.width + 10;
@@ -241,7 +241,7 @@ class Ipziopp {
   }
   draw() {
     ctx.fillStyle = "red";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    //ctx.fillRect(this.x, this.y, this.width, this.height);
 
     // 이미지 크기를 사각형의 크기에 맞게 조정
     var imageWidth = this.width + 38;
@@ -281,7 +281,7 @@ class Kuten {
   }
   draw() {
     ctx.fillStyle = "red";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    //ctx.fillRect(this.x, this.y, this.width, this.height);
 
     // 이미지 크기를 사각형의 크기에 맞게 조정
     var imageWidth = this.width + 35;
@@ -421,7 +421,7 @@ function doEveryFrame() {
       o.splice(i, 1);
     }
     a.x -= obstacleSpeed;
-    //colDetection(dino, a);
+    colDetection(dino, a);
     a.draw();
   });
   obstacleArray2.forEach((a, i, o) => {
@@ -430,7 +430,7 @@ function doEveryFrame() {
       o.splice(i, 1);
     }
     a.y += obstacleSpeed2;
-    //colDetection(dino, a);
+    colDetection(dino, a);
     a.draw();
   });
   obstacleArray3.forEach((a, i, o) => {
@@ -439,7 +439,7 @@ function doEveryFrame() {
       o.splice(i, 1);
     }
     a.y += obstacleSpeed2;
-    //colDetection(dino, a);
+    colDetection(dino, a);
     a.draw();
   });
 
@@ -635,4 +635,5 @@ function upgradeDifficulty() {
   interval.push(30);
   interval.push(30);
   obstacleSpeed++;
+  obstacleSpeed2++;
 }

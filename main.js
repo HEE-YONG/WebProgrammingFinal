@@ -134,6 +134,21 @@ class Soo {
   }
 }
 
+class keyGuide {
+  constructor() {
+    this.x = 200;
+    this.y = 100;
+    this.width = 3000;
+    this.height = 100;
+  }
+
+  draw() {
+    ctx.fillStyle = "red";
+    ctx.font = "35px 'DotGothic16', sans-serif";
+    ctx.fillText("<- -> 키를 사용해서 피하세요", this.x, this.y);
+  }
+}
+
 //Cactus
 var cactusImg = new Image();
 cactusImg.src = "./images/hat_dot.png";
@@ -212,6 +227,85 @@ class Cat {
   }
 }
 
+//IPZIOPP
+
+var ipzioppImg = new Image();
+ipzioppImg.src = "./images/ipziopp_dot.png";
+
+class Ipziopp {
+  constructor() {
+    this.x = 450;
+    this.y = -200;
+    this.width = 145;
+    this.height = 180;
+  }
+  draw() {
+    ctx.fillStyle = "red";
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+
+    // 이미지 크기를 사각형의 크기에 맞게 조정
+    var imageWidth = this.width + 38;
+    var imageHeight = this.height + 38;
+
+    // 이미지의 가로 크기가 사각형의 가로 크기보다 클 경우
+    if (ipzioppImg.width > this.width) {
+      imageWidth = this.width + 38;
+      imageHeight = (ipzioppImg.height * this.width) / ipzioppImg.width + 38;
+    }
+
+    // 이미지의 세로 크기가 사각형의 세로 크기보다 클 경우
+    if (ipzioppImg.height > this.height) {
+      imageHeight = this.height + 38;
+      imageWidth = (ipzioppImg.width * this.height) / ipzioppImg.height + 38;
+    }
+
+    // 이미지를 사각형 내에 가운데 위치시키기 위해 좌표 계산
+    var imageX = this.x + (this.width - imageWidth) / 2;
+    var imageY = this.y + (this.height - imageHeight) / 2;
+
+    ctx.drawImage(ipzioppImg, imageX, imageY, imageWidth, imageHeight);
+  }
+}
+
+//KUTEN
+
+var kutenImg = new Image();
+kutenImg.src = "./images/kuten_dot.png";
+
+class Kuten {
+  constructor() {
+    this.x = 450;
+    this.y = -200;
+    this.width = 150;
+    this.height = 180;
+  }
+  draw() {
+    ctx.fillStyle = "red";
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+
+    // 이미지 크기를 사각형의 크기에 맞게 조정
+    var imageWidth = this.width + 35;
+    var imageHeight = this.height + 35;
+
+    // 이미지의 가로 크기가 사각형의 가로 크기보다 클 경우
+    if (kutenImg.width > this.width) {
+      imageWidth = this.width + 35;
+      imageHeight = (kutenImg.height * this.width) / kutenImg.width + 35;
+    }
+
+    // 이미지의 세로 크기가 사각형의 세로 크기보다 클 경우
+    if (kutenImg.height > this.height) {
+      imageHeight = this.height + 35;
+      imageWidth = (kutenImg.width * this.height) / kutenImg.height + 35;
+    }
+
+    // 이미지를 사각형 내에 가운데 위치시키기 위해 좌표 계산
+    var imageX = this.x + (this.width - imageWidth) / 2;
+    var imageY = this.y + (this.height - imageHeight) / 2;
+
+    ctx.drawImage(kutenImg, imageX, imageY, imageWidth, imageHeight);
+  }
+}
 /**************************************   Game   ********************************************/
 var score = 0;
 var timer = 0;
@@ -227,8 +321,17 @@ var sooTimer = 0;
 var currentTimer = 60;
 var delay = 70;
 var randomIndex;
-var interval = [8, 8, 30, 70, 70, 75, 75, 150, 150];
+var interval = [8, 8, 30, 70, 70, 75, 75, 100, 150];
 var tapTimer = 0;
+var doGuide = false;
+var guideTimer = 0;
+var guide = new keyGuide();
+var x_value = [0, 0, 180, 360, 540, 720, 720];
+var randomIndex2;
+var x_point = 450;
+var obstacleArray2 = [];
+var obstacleSpeed2 = 10;
+var obstacleArray3 = [];
 
 //매 프레임마다 함수 실행시킴(모니터 fps에 따라 다름)
 function doEveryFrame() {
@@ -251,7 +354,7 @@ function doEveryFrame() {
     if (timer % 1500 == 0) {
       currentTimer = timer;
       tapTimer = timer;
-      //dino.x = 20;
+      upgradeDifficulty();
       moveOk = false;
       changeBodyBackgroundColorToGray();
       moveToStart();
@@ -278,11 +381,37 @@ function doEveryFrame() {
   } else {
     //hard-mode
     //1500~2999 4500~5999
+    if (timer == 1600) {
+      doGuide = true;
+    }
     if (timer % 1500 == 0) {
+      tapTimer = timer;
       moveOk = true;
       changeBodyBackgroundColorToRed();
       bgm_normal.pause();
       bgm_hard.play();
+    }
+    //1800부터 2800
+    if (timer - tapTimer > 300 && timer - tapTimer < 1300) {
+      if (timer % 70 == 0) {
+        // randomIndex2 = Math.floor(Math.random() * x_value.length);
+        // x_point = x_value[randomIndex2];
+
+        var ipziopp = new Ipziopp();
+        randomIndex2 = Math.floor(Math.random() * x_value.length);
+        ipziopp.x = x_value[randomIndex2];
+        obstacleArray2.push(ipziopp);
+        var audio = new Audio("./bgm/ipziopp.mp3");
+        audio.play();
+      }
+      if (timer % 110 == 0) {
+        var kuten = new Kuten();
+        randomIndex2 = Math.floor(Math.random() * x_value.length);
+        kuten.x = x_value[randomIndex2];
+        obstacleArray3.push(kuten);
+        var audio = new Audio("./bgm/kuten.mp3");
+        audio.play();
+      }
     }
   }
 
@@ -292,7 +421,25 @@ function doEveryFrame() {
       o.splice(i, 1);
     }
     a.x -= obstacleSpeed;
-    colDetection(dino, a);
+    //colDetection(dino, a);
+    a.draw();
+  });
+  obstacleArray2.forEach((a, i, o) => {
+    //x좌표가 0미만이면 어레이에서 삭제
+    if (a.y > 500) {
+      o.splice(i, 1);
+    }
+    a.y += obstacleSpeed2;
+    //colDetection(dino, a);
+    a.draw();
+  });
+  obstacleArray3.forEach((a, i, o) => {
+    //x좌표가 0미만이면 어레이에서 삭제
+    if (a.y > 500) {
+      o.splice(i, 1);
+    }
+    a.y += obstacleSpeed2;
+    //colDetection(dino, a);
     a.draw();
   });
 
@@ -345,6 +492,15 @@ function doEveryFrame() {
     if (dino.x < 19) {
       movingToStart = false;
     }
+  }
+  //가이드
+  if (doGuide) {
+    guide.draw();
+    guideTimer++;
+  }
+  if (guideTimer > 150) {
+    doGuide = false;
+    guideTimer = 0;
   }
 
   // 화면 업데이트
@@ -402,7 +558,7 @@ document.addEventListener("keydown", function (e) {
 // 좌우 키 관련 변수
 var leftKeyPressed = false;
 var rightKeyPressed = false;
-var moveSpeed = 4;
+var moveSpeed = 8;
 var moveOk = false;
 
 // 좌우키 이벤트 리스너 등록
@@ -473,3 +629,10 @@ document.addEventListener("keydown", function (event) {
     stopGame();
   }
 });
+
+//난이도 증가
+function upgradeDifficulty() {
+  interval.push(30);
+  interval.push(30);
+  obstacleSpeed++;
+}
